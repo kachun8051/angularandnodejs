@@ -1,0 +1,78 @@
+<div class="ui raised segment">
+    <h2 class="ui header">Student Form</h2>
+    <form 
+        [formGroup]="studentForm"
+        (ngSubmit)="onSubmit(studentForm.value)"
+        class="ui form">
+  
+      <!-- 
+        http://angular.io/api/forms/Validators
+        ---------------->
+  
+      <!-- ---------------->
+      <div class="field"
+          [class.error] = "!studentForm.controls['studentInput'].valid && studentForm.controls['studentInput'].touched"
+      >
+        <label for="studentInput">Student</label>
+        <input type="text" 
+          id="studentInput" 
+          placeholder="Student ID"
+          formControlName='studentInput'
+          >
+      </div>
+  
+      <div *ngIf="!studentForm.controls['studentInput'].valid"
+              class="ui error message">Student input is invalid</div>
+  
+      <div  *ngIf="studentForm.controls['studentInput'].hasError('required')" class="ui error message">
+        Student ID is required.
+      </div>
+  
+      <div  *ngIf="studentForm.controls['studentInput'].hasError('invalidStudentId')" class="ui error message">
+        Student ID must begin with 19 and has a length of 9 digits.
+      </div>
+  
+      <!-- ---------------->
+      <div class="field"   
+        [class.error] = "!studentForm.controls['studentName'].valid && studentForm.controls['studentName'].touched          ">
+        <label for="studentName">Name</label>
+        <input type="text" 
+          id="studentName" 
+          placeholder="Student Name"
+          formControlName='studentName'
+          >
+      </div>
+  
+      <div *ngIf="!studentForm.controls['studentName'].valid"
+        class="ui error message">Student name is invalid</div>
+  
+      <div *ngIf="studentForm.controls['studentName'].hasError('required')" class="ui error message">
+        Student name is required.
+      </div>
+  
+      <!-- ---------------->
+      <div class="field"   
+        [class.error] = "!studentForm.controls['studentEmail'].valid && studentForm.controls['studentEmail'].touched          ">
+        <label for="studentEmail">Email (optional)</label>
+        <input type="text" 
+          id="studentEmail" 
+          placeholder="Email Address"
+          formControlName='studentEmail'
+          >
+      </div>
+  
+      <div *ngIf="!studentForm.controls['studentEmail'].valid"
+        class="ui error message">Email address is invalid</div>
+  
+      <div  *ngIf="studentForm.controls['studentEmail'].hasError('email')" class="ui error message">
+        Email address is invalid.
+      </div>
+  
+      <!-- ---------------->
+      <button type="submit" class="ui button">Submit</button>
+    </form>
+  </div>
+  
+  <div *ngIf="loading">Loading...</div>
+  <pre>{{ serverData }}</pre>
+  
