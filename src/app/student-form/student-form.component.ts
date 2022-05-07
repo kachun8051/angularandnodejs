@@ -19,21 +19,22 @@ export class StudentFormComponent implements OnInit {
     this.http = http;
     this.studentForm = fb.group(   
         {
-          'studentInput': [ '190000000', Validators.compose( [Validators.required, this.studentIdValidator] ) ],  // studentForm.controls[ 'studentInput' ]
+          'studentInput': [ '190000000', Validators.compose( [Validators.required, Validators.pattern("^19[0-9]{7}")] ) ],  // studentForm.controls[ 'studentInput' ]
           'studentName': [ 'Your name' , Validators.required ],      // studentForm.controls[ 'studentName' ]
           'studentEmail': [ 'name@your.domain', Validators.email ]
         }
     );
     this.serverData = {};
   }
-
+/*
   studentIdValidator(control: FormControl): { [s: string]: boolean } {
-    if (!control.value.match(/^19[0-9]{7}/)) {
+    if (!control.value.match(/^19[0-9]{5}/)) {
       return {invalidStudentId: true};
-    }
-    return {invalidStudentId: false};
+    } else {
+      return {invalidStudentId: false};
+    }    
   }
-  
+ */ 
 
   onSubmit(formValue: any): void {
     console.log( 'you submitted value: ', formValue );
@@ -50,7 +51,7 @@ export class StudentFormComponent implements OnInit {
         console.log('URL: ' + pathName);        
         this.http.get(pathName).subscribe({      
             next: (res) => {
-              console.log("data is fetched successfully.");
+              console.log("data is uploaded successfully.");
               this.serverData = JSON.parse(JSON.stringify(res)); //res.json();
               this.loading = false;            
             },
